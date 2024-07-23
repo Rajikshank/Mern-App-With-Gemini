@@ -5,6 +5,8 @@ import { FaRegTrashAlt } from "react-icons/fa";
 import { CgCircleci } from "react-icons/cg";
 import { FaEdit } from "react-icons/fa";
 import { parseISO, format, formatDistanceToNow } from "date-fns";
+import SubTask from "./SubTask";
+import { FaCircleArrowDown } from "react-icons/fa6";
 
 export default function TodoItem({
   todo,
@@ -43,9 +45,13 @@ export default function TodoItem({
           <div className="flex ">
             <h3 className="text-xs px-1 ">
               {" "}
-              Due : {todo.date &&formatRemainingTime(todo.date)}{" "}
+              Due : {todo.date && formatRemainingTime(todo.date)}{" "}
             </h3>{" "}
             <h1 className="text-xs px-1 text-green-500">70% completed</h1>
+            <button className="flex text-xs items-center ">
+              {" "}
+              <FaCircleArrowDown className="m-1" /> Subtasks
+            </button>
           </div>
         </span>
       </div>
