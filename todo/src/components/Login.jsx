@@ -32,17 +32,21 @@ export default function Login({ signup, setSignup, setuser, user }) {
         setError(false);
         console.log("password matched");
 
-        createAccount(formData).then((userdata) => {
-          console.log(userdata);
-          setuser(userdata.user);
-          setSignup(false);
-          //navigating to dashboard after the promise resolved
-          navigate(
-            userdata === undefined
-              ? "/"
-              : `/dashboard/${userdata.user._id.toString()}`
-          );
-        });
+        createAccount(formData)
+          .then((userdata) => {
+            console.log(userdata);
+            setuser(userdata.user);
+            setSignup(false);
+            //navigating to dashboard after the promise resolved
+            navigate(
+              userdata === undefined
+                ? "/"
+                : `/dashboard/${userdata.user._id.toString()}`
+            );
+          })
+          .catch((err) => {
+            console.log("signup failed");
+          });
       } else {
         setError(true);
       }
@@ -86,7 +90,9 @@ export default function Login({ signup, setSignup, setuser, user }) {
             <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
               <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
                 <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
-                  Sign in to your account
+                  {resetpassword
+                    ? "Reset Your Password"
+                    : "Sign in to your account"}
                 </h1>
                 <form className="space-y-4 md:space-y-6" action="#">
                   <div>
@@ -161,7 +167,21 @@ export default function Login({ signup, setSignup, setuser, user }) {
                     />
                   </div>
                   <div className="flex items-center justify-between">
-                    <div className="flex items-start">
+                    {resetpassword && (
+                      <a
+                        href="#"
+                        onClick={() => setResetpassword((prev) => false)}
+                        className="text-sm font-medium text-slate-400 hover:underline "
+                      >
+                        Want to Sign in?
+                      </a>
+                    )}
+
+                    <div
+                      className={`${
+                        resetpassword && "hidden"
+                      } flex items-start`}
+                    >
                       <div className="flex items-center h-5">
                         <input
                           id="remember"
@@ -201,7 +221,10 @@ export default function Login({ signup, setSignup, setuser, user }) {
                     Don’t have an account yet?{" "}
                     <a
                       href="#"
-                      onClick={() => setSignup(true)}
+                      onClick={() => {
+                        setSignup(true);
+                        setResetpassword(false);
+                      }}
                       className="font-medium text-primary-600 hover:underline dark:text-primary-500"
                     >
                       Sign up
@@ -349,39 +372,13 @@ export default function Login({ signup, setSignup, setuser, user }) {
                         }))
                       }
                       placeholder="••••••••"
-                      className={`bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600  focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:${
+                      className={`bg-gray-50 border border-gray-300 text-gray-900 rounded-lg mb-2 focus:ring-primary-600  focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:${
                         error ? "border-red-600" : "border-gray-600"
                       } dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500`}
                       required=""
                     />
                   </div>
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-start">
-                      <div className="flex items-center h-5">
-                        <input
-                          id="remember"
-                          aria-describedby="remember"
-                          type="checkbox"
-                          className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
-                          required=""
-                        />
-                      </div>
-                      <div className="ml-3 text-sm">
-                        <label
-                          for="remember"
-                          className="text-gray-500 dark:text-gray-300"
-                        >
-                          Remember me
-                        </label>
-                      </div>
-                    </div>
-                    <a
-                      href="#"
-                      className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500"
-                    >
-                      Forgot password?
-                    </a>
-                  </div>
+
                   <button
                     type="submit"
                     className="w-full text-white bg-rose-600 hover:bg-rose-500 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
