@@ -8,14 +8,10 @@ export default function TodoItem({
   todo,
   toggleTodo,
   toggleDelete,
-  setTodoid,
+  setSeclectedTodo,
+  selectedTodo,
   setText,
 }) {
-
-
-
-
-  
   return (
     <div className="px-10 flex justify-between bg-white rounded shadow p-4 mb-2">
       <div
@@ -40,11 +36,13 @@ export default function TodoItem({
         </button>
         <button
           onClick={() => {
-            setTodoid(todo._id.toString());
+            setSeclectedTodo((prev) => todo);
             setText((prev) => todo.text);
           }}
           className={`px-4 py-2  bg-slate-600 hover:bg-slate-500 rounded-full
-        } text-white flex items-center gap-2 h-min`}
+        } text-white flex items-center gap-2 h-min ${
+         selectedTodo!==null && selectedTodo._id.toString() === todo._id && "cursor-not-allowed"
+        } `}
         >
           <FaRegTrashAlt />
           Edit

@@ -1,15 +1,38 @@
 import React, { useState } from "react";
+import { editTodo } from "../utils/Request";
 
-const AddTodo = ({ addTodo, text, setText, Todo_id }) => {
+const AddTodo = ({
+  addTodo,
+  text,
+  setText,
+  selectedTodo,
+  setTodos,
+  setSeclectedTodo,
+}) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (text.trim()) {
-      addTodo({
-        _id: Date.now(),
-        text,
-        completed: false,
-        subtask: [],
-      });
+      if (selectedTodo) {
+        editTodo({
+          todo_id: selectedTodo._id.toString(),
+          text: text,
+          completed: selectedTodo.completed,
+          subtask: selectedTodo.subtask,
+        })
+          .then((value) => {
+            console.log(value);
+            setTodos([...value]);
+          })
+          .catch((err) => console.log("todo edit failed", err));
+        setSeclectedTodo((prev) => null); //deselecting editing option
+      } else {
+        addTodo({
+          _id: Date.now(),
+          text,
+          completed: false,
+          subtask: [],
+        });
+      }
       setText("");
     }
   };

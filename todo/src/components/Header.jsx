@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { FaUserEdit } from "react-icons/fa";
 import { MdSpaceDashboard } from "react-icons/md";
 
-export default function Header({ edit, currentuser,toggleaccountedit }) {
+export default function Header({ edit, currentuser, toggleaccountedit }) {
   const navigate = useNavigate();
 
   return (
@@ -14,7 +14,7 @@ export default function Header({ edit, currentuser,toggleaccountedit }) {
         <h1 className="text-2xl font-bold">
           Hi
           {currentuser.username
-            ? currentuser.username.toUpperCase() + " "
+            ?" "+ currentuser.username.toUpperCase() + " "
             : "There"}
           !!!
         </h1>

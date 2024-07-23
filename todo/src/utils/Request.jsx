@@ -18,6 +18,7 @@ export async function createAccount({ email, username, password, security }) {
     const response = await instance.post("/user", user);
     console.log(response);
     localStorage.setItem("token", response.data.token);
+    localStorage.setItem("user", JSON.stringify(response.data.user));
     instance.defaults.headers.common["x-auth-token"] = response.data.token;
     return response.data;
   } catch (err) {
@@ -32,7 +33,7 @@ export async function login({ email, password }) {
   try {
     const response = await instance.post("/user-login", user);
     localStorage.setItem("token", response.data.token);
-
+    localStorage.setItem("user", JSON.stringify(response.data.user));
     instance.defaults.headers.common["x-auth-token"] = response.data.token;
 
     console.log(response.data);
@@ -61,7 +62,7 @@ export async function edituser({ email, password, security, username }) {
       password,
       security,
     });
-
+    localStorage.setItem("user", JSON.stringify(response.data));
     return response.data;
   } catch (error) {}
 }
@@ -77,6 +78,7 @@ export async function deleteuser(navigate) {
     loadtoken();
     const response = await instance.delete("/user");
     instance.defaults.headers.common["x-auth-token"] = "";
+    localStorage.clear();
     navigate("/");
     return response.status;
   } catch (error) {

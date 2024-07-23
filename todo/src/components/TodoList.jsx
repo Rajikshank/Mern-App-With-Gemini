@@ -5,7 +5,8 @@ export default function TodoList({
   todos,
   toggleTodo,
   toggleDelete,
-  setTodoid,
+  selectedTodo,
+  setSeclectedTodo,
   setText
 }) {
   return (
@@ -16,7 +17,8 @@ export default function TodoList({
           todo={todo}
           toggleTodo={toggleTodo}
           toggleDelete={toggleDelete}
-          setTodoid={setTodoid}
+          selectedTodo={selectedTodo}
+          setSeclectedTodo={setSeclectedTodo}
           setText={setText}
         />
       ))}
