@@ -4,6 +4,7 @@ import TodoList from "./TodoList";
 import { deletetodo, editTodo, getTodos, sendTodo } from "../utils/Request";
 import Header from "./Header";
 import AccountEditForm from "./AccountEditform";
+import run from "../utils/Gemini-api";
 
 export default function Dashboard({ currentuser, setuser }) {
   const [todos, setTodos] = useState([
@@ -29,6 +30,8 @@ export default function Dashboard({ currentuser, setuser }) {
   const [toggletodoEdit, setToggleEdit] = useState(false);
 
   const [toggleaccountedit, settoggleAccountedit] = useState(false);
+
+  //run("make a sandwich");
 
   //ensure to load all the todos and user data at the begining of the page render
   useEffect(() => {
