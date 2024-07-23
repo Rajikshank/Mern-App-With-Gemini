@@ -1,22 +1,30 @@
 import { useEffect, useState } from "react";
 import AddTodo from "./AddTodo";
 import TodoList from "./TodoList";
-import {
-  deletetodo,
-  editTodo,
-  getTodos,
-
-  sendTodo,
-} from "../utils/Request";
+import { deletetodo, editTodo, getTodos, sendTodo } from "../utils/Request";
 import Header from "./Header";
 import AccountEditForm from "./AccountEditform";
 
 export default function Dashboard({ currentuser, setuser }) {
   const [todos, setTodos] = useState([
-    { _id: 1, text: "Learn React", completed: false, subtask: [] },
-    { _id: 2, text: "Learn Tailwind CSS", completed: false, subtask: [] },
+    {
+      _id: 1,
+      text: "Learn React",
+      completed: false,
+      subtask: [],
+      Date: Date.now,
+    },
+    {
+      _id: 2,
+      text: "Learn Tailwind CSS",
+      completed: false,
+      subtask: [],
+      Date: Date.now,
+    },
   ]);
+
   const [text, setText] = useState(""); // add todo text handler
+  const [date, setDate] = useState("2024-07-26T00:00");
   const [selectedTodo, setSeclectedTodo] = useState(null);
   const [toggletodoEdit, setToggleEdit] = useState(false);
 
@@ -28,9 +36,11 @@ export default function Dashboard({ currentuser, setuser }) {
       setuser((prev) => JSON.parse(localStorage.getItem("user")));
     }
 
-    getTodos().then((value) => {
-      setTodos((prev) => [...value]);
-    });
+    getTodos()
+      .then((value) => {
+        setTodos((prev) => [...value]);
+      })
+      .catch((err) => console.log("error in fetching todos", err));
 
     return () => {
       // clean up for useffect
@@ -39,10 +49,12 @@ export default function Dashboard({ currentuser, setuser }) {
   }, []);
 
   const addTodo = async (todo) => {
-    await sendTodo(todo).then((value) => {
-      setTodos([...value]);
-      console.log("Todo added Response", value);
-    });
+    await sendTodo(todo)
+      .then((value) => {
+        setTodos([...value]);
+        console.log("Todo added Response", value);
+      })
+      .catch((err) => console.log("error in fetching todos", err));
   };
 
   const toggleTodo = async (id) => {
@@ -53,6 +65,7 @@ export default function Dashboard({ currentuser, setuser }) {
         text: temp[0].text,
         completed: !temp[0].completed,
         subtask: temp[0].subtask,
+        date: temp[0].date,
       }).then((value) => {
         console.log("todos updated");
         setTodos((prev) => [...value]);
@@ -76,7 +89,7 @@ export default function Dashboard({ currentuser, setuser }) {
         toggleaccountedit={toggleaccountedit}
       />
       {!toggleaccountedit && (
-        <div className="  p-4 ">
+        <div className="  p-4   md:w-1/2 lg:w-1/2  ">
           <AddTodo
             addTodo={addTodo}
             text={text}
@@ -84,6 +97,8 @@ export default function Dashboard({ currentuser, setuser }) {
             selectedTodo={selectedTodo}
             setTodos={setTodos}
             setSeclectedTodo={setSeclectedTodo}
+            date={date}
+            setDate={setDate}
           />
           <TodoList
             todos={todos}
@@ -92,6 +107,7 @@ export default function Dashboard({ currentuser, setuser }) {
             selectedTodo={selectedTodo}
             setSeclectedTodo={setSeclectedTodo}
             setText={setText}
+            setDate={setDate}
           />
         </div>
       )}

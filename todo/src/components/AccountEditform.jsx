@@ -66,7 +66,7 @@ export default function AccountEditForm({ setEdit, setuser }) {
               <form className="" action="#" onSubmit={handlesubmit}>
                 <div>
                   <label
-                    for="username"
+                    htmlFor="username"
                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   >
                     User Name
@@ -89,7 +89,7 @@ export default function AccountEditForm({ setEdit, setuser }) {
                 </div>
                 <div>
                   <label
-                    for="email"
+                    htmlFor="email"
                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   >
                     Your Email
@@ -112,7 +112,7 @@ export default function AccountEditForm({ setEdit, setuser }) {
                 </div>
                 <div>
                   <label
-                    for="security"
+                    htmlFor="security"
                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   >
                     Your Security Keyword
@@ -135,7 +135,7 @@ export default function AccountEditForm({ setEdit, setuser }) {
                 </div>
                 <div>
                   <label
-                    for="password"
+                    htmlFor="password"
                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   >
                     Password
@@ -158,13 +158,13 @@ export default function AccountEditForm({ setEdit, setuser }) {
                 </div>
                 <div>
                   <label
-                    for="confirm password"
+                    htmlFor="confirm password"
                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   >
                     Confirm Password
                   </label>
                   <label
-                    for="confirm password"
+                    htmlFor="confirm password"
                     className={`${
                       error ? "" : "hidden"
                     } block mb-1 text-sm font-medium text-gray-900 dark:text-red-600`}

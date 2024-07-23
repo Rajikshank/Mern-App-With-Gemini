@@ -26,7 +26,7 @@ router.get("/todos", Middleware, async (req, res) => {
 
 //add todo item
 router.post("/todos", Middleware, async (req, res) => {
-  const { text, completed, subtask } = req.body;
+  const { text, completed, subtask, date } = req.body;
   const { id } = req.user;
 
   try {
@@ -38,7 +38,8 @@ router.post("/todos", Middleware, async (req, res) => {
     if (
       text === undefined ||
       completed === undefined ||
-      subtask === undefined
+      subtask === undefined ||
+      date === undefined
     ) {
       return res.status(400).json({ msg: "content not found" });
     }
@@ -48,7 +49,7 @@ router.post("/todos", Middleware, async (req, res) => {
     });
 
     if (todo_record) {
-      todo_record.todos.push({ text, completed, subtask });
+      todo_record.todos.push({ text, completed, subtask, date });
       await todo_record.save();
 
       return res.status(200).json(todo_record.todos);
@@ -60,7 +61,7 @@ router.post("/todos", Middleware, async (req, res) => {
 
 //edit  todo items
 router.put("/todos", Middleware, async (req, res) => {
-  const { todo_id, text, completed, subtask } = req.body;
+  const { todo_id, text, completed, subtask, date } = req.body;
   const { id } = req.user;
 
   try {
@@ -72,7 +73,8 @@ router.put("/todos", Middleware, async (req, res) => {
       todo_id === undefined ||
       text === undefined ||
       completed === undefined ||
-      subtask === undefined
+      subtask === undefined ||
+      date === undefined
     ) {
       return res.status(400).json({ msg: "content not found" });
     }
@@ -84,7 +86,7 @@ router.put("/todos", Middleware, async (req, res) => {
     if (todo_record) {
       todo_record.todos = todo_record.todos.map((val) =>
         val._id.toString() === todo_id
-          ? { _id: todo_id, text, subtask, completed }
+          ? { _id: todo_id, text, subtask, completed, date }
           : val
       );
       await todo_record.save();
@@ -100,13 +102,12 @@ router.put("/todos", Middleware, async (req, res) => {
 
 router.delete("/todos/:id", Middleware, async (req, res) => {
   const { id } = req.user;
-  const  todo_id  = req.params.id;
+  const todo_id = req.params.id;
 
   console.log(todo_id);
   try {
     var user = await TodoSchema.findById({ _id: id });
     var todo = user.todos.filter((value) => value._id.toString() === todo_id);
-    
 
     //returning a error message if there is no todo record in the db
     if (todo.length === 0) {

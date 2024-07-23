@@ -116,12 +116,9 @@ export default function Login({ signup, setSignup, setuser, user }) {
               href="#"
               className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white"
             >
-              <img
-                className="w-8 h-8 mr-2"
-                src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg"
-                alt="logo"
-              />
-              Flowbite
+              <img className=" h-8 mr-2" src="./image.png" alt="logo" />
+             
+           Todo App
             </a>
             <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
               <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
@@ -133,7 +130,7 @@ export default function Login({ signup, setSignup, setuser, user }) {
                 <form className="space-y-4 md:space-y-6" action="#">
                   <div>
                     <label
-                      for="email"
+                      htmlFor="email"
                       className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                     >
                       Your email
@@ -157,7 +154,7 @@ export default function Login({ signup, setSignup, setuser, user }) {
                   {resetpassword && (
                     <div>
                       <label
-                        for="security"
+                        htmlFor="security"
                         className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                       >
                         Please Enter your Security Key
@@ -181,7 +178,7 @@ export default function Login({ signup, setSignup, setuser, user }) {
                   )}
                   <div>
                     <label
-                      for="password"
+                      htmlFor="password"
                       className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                     >
                       Password
@@ -232,7 +229,7 @@ export default function Login({ signup, setSignup, setuser, user }) {
                       </div>
                       <div className="ml-3 text-sm">
                         <label
-                          for="remember"
+                          htmlFor="remember"
                           className="text-gray-500 dark:text-gray-300"
                         >
                           Remember me
@@ -253,7 +250,7 @@ export default function Login({ signup, setSignup, setuser, user }) {
                     </a>
                   </div>
                   <label
-                    for="reset error"
+                    htmlFor="reset error"
                     className={`${
                       error.reset.isTrue ? "" : "hidden"
                     } block  text-sm font-medium text-gray-900 dark:text-red-600`}
@@ -261,7 +258,7 @@ export default function Login({ signup, setSignup, setuser, user }) {
                     {error.reset.error}
                   </label>
                   <label
-                    for="sign in error"
+                    htmlFor="sign in error"
                     className={`${
                       error.login.isTrue ? "" : "hidden"
                     } block  text-sm font-medium text-gray-900 dark:text-red-600`}
@@ -315,7 +312,7 @@ export default function Login({ signup, setSignup, setuser, user }) {
                 <form className="space-y-4 md:space-y-2" action="#">
                   <div>
                     <label
-                      for="username"
+                      htmlFor="username"
                       className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                     >
                       User Name
@@ -338,7 +335,7 @@ export default function Login({ signup, setSignup, setuser, user }) {
                   </div>
                   <div>
                     <label
-                      for="email"
+                      htmlFor="email"
                       className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                     >
                       Your Email
@@ -356,12 +353,12 @@ export default function Login({ signup, setSignup, setuser, user }) {
                       }
                       className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       placeholder="name@company.com"
-                      required=""
+                      required="true"
                     />
                   </div>
                   <div>
                     <label
-                      for="security"
+                      htmlFor="security"
                       className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                     >
                       Your Security Keyword
@@ -384,7 +381,7 @@ export default function Login({ signup, setSignup, setuser, user }) {
                   </div>
                   <div>
                     <label
-                      for="password"
+                      htmlFor="password"
                       className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                     >
                       Password
@@ -407,13 +404,13 @@ export default function Login({ signup, setSignup, setuser, user }) {
                   </div>
                   <div>
                     <label
-                      for="confirm password"
+                      htmlFor="confirm password"
                       className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                     >
                       Confirm Password
                     </label>
                     <label
-                      for="confirm password"
+                      htmlFor="confirm password"
                       className={`${
                         error.passwordmatch.isTrue ? "" : "hidden"
                       } block mb-1 text-sm font-medium text-gray-900 dark:text-red-600`}
@@ -439,7 +436,7 @@ export default function Login({ signup, setSignup, setuser, user }) {
                     />
                   </div>
                   <label
-                    for="confirm password"
+                    htmlFor="confirm password"
                     className={`${
                       error.signup.isTrue ? "" : "hidden"
                     } block mb-1 text-sm font-medium text-gray-900 dark:text-red-600`}
@@ -447,7 +444,7 @@ export default function Login({ signup, setSignup, setuser, user }) {
                     {error.signup.error}
                   </label>
                   <label
-                    for="signup error"
+                    htmlFor="signup error"
                     className={`${
                       error.signup.isTrue ? "" : "hidden"
                     } block mb-1 text-sm font-medium text-gray-900 dark:text-red-600`}

@@ -7,7 +7,8 @@ export default function TodoList({
   toggleDelete,
   selectedTodo,
   setSeclectedTodo,
-  setText
+  setText,
+  setDate
 }) {
   return (
     <div className="mt-4">
@@ -20,6 +21,7 @@ export default function TodoList({
           selectedTodo={selectedTodo}
           setSeclectedTodo={setSeclectedTodo}
           setText={setText}
+          setDate={setDate}
         />
       ))}
     </div>

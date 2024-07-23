@@ -107,17 +107,19 @@ export async function logout(navigate) {
   navigate("/");
 }
 
-export async function sendTodo({ text, completed, subtask }) {
+export async function sendTodo({ text, completed, subtask, date }) {
   try {
     const response = await instance.post("/todos", {
       text,
       completed,
       subtask,
+      date,
     });
     console.log(response.data);
     return response.data;
   } catch (error) {
     console.log(error);
+    throw error;
   }
 }
 
