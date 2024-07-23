@@ -11,25 +11,38 @@ export default function Login({ signup, setSignup, setuser, user }) {
     confirmpassword: "",
     security: "",
   };
+
+  const errorState = {
+    login: {
+      isTrue: false,
+      erro: "",
+    },
+    signup: {
+      isTrue: false,
+      error: "",
+    },
+    reset: {
+      isTrue: false,
+      error: "",
+    },
+    passwordmatch: {
+      isTrue: false,
+    },
+  };
   const [formData, setformData] = useState(initial_fields);
 
-  const [error, setError] = useState(false);
+  const [error, setError] = useState(errorState);
   const [resetpassword, setResetpassword] = useState(false);
   const navigate = useNavigate();
 
-  const Resetpassword = async () => {
-    resetCredential(formData)
-      .then((value) => console.log("reset success"))
-      .catch((err) => console.log(err));
-  };
-
+  //console.log(errorState.passwordmatch.isTrue);
   //console.log(formData);
   const handlesubmit = async (e) => {
     e.preventDefault();
 
     if (signup && !resetpassword) {
       if (formData.password === formData.confirmpassword) {
-        setError(false);
+        setError((prev) => ({ ...prev, passwordmatch: { isTrue: false } })); //resetting the error state for password match
         console.log("password matched");
 
         createAccount(formData)
@@ -46,28 +59,51 @@ export default function Login({ signup, setSignup, setuser, user }) {
           })
           .catch((err) => {
             console.log("signup failed");
+            setError((prev) => ({
+              ...prev,
+              signup: { isTrue: false, eror: err.response.data.msg },
+            }));
           });
       } else {
-        setError(true);
+        setError((prev) => ({ ...prev, passwordmatch: { isTrue: true } }));
       }
     } else if (resetpassword) {
       // reset password handler
-      Resetpassword(formData);
-      setResetpassword(false);
-      setformData((prev) => initial_fields);
+
+      resetCredential(formData)
+        .then((value) => {
+          console.log("Reset Success");
+
+          setResetpassword(false);
+          setformData((prev) => initial_fields);
+          setError((prev) => errorState);
+        })
+        .catch((err) => {
+          console.log("error here", err.response.data.msg);
+          setError((prev) => ({
+            ...prev,
+            reset: { isTrue: true, error: err.response.data.msg },
+          }));
+        });
     } else {
       login(formData)
         .then((userdata) => {
           console.log(userdata);
           setuser(userdata.user);
-
+          setError((prev) => errorState);
           navigate(
             userdata === undefined
               ? "/"
               : `/dashboard/${userdata.user._id.toString()}`
           );
         })
-        .catch((err) => console.log("login error!!!"));
+        .catch((err) => {
+          console.log("login error!!!");
+          setError((prev) => ({
+            ...prev,
+            login: { isTrue: true, error: err.response.data.msg },
+          }));
+        });
     }
   };
 
@@ -170,7 +206,10 @@ export default function Login({ signup, setSignup, setuser, user }) {
                     {resetpassword && (
                       <a
                         href="#"
-                        onClick={() => setResetpassword((prev) => false)}
+                        onClick={() => {
+                          setResetpassword((prev) => false);
+                          setError((prev) => errorState);
+                        }}
                         className="text-sm font-medium text-slate-400 hover:underline "
                       >
                         Want to Sign in?
@@ -202,7 +241,10 @@ export default function Login({ signup, setSignup, setuser, user }) {
                     </div>
                     <a
                       href="#"
-                      onClick={() => setResetpassword(true)}
+                      onClick={() => {
+                        setResetpassword(true);
+                        setError(errorState);
+                      }}
                       className={`text-sm font-medium text-slate-400 hover:underline   ${
                         resetpassword && "hidden"
                       }`}
@@ -210,6 +252,23 @@ export default function Login({ signup, setSignup, setuser, user }) {
                       Forgot password?
                     </a>
                   </div>
+                  <label
+                    for="reset error"
+                    className={`${
+                      error.reset.isTrue ? "" : "hidden"
+                    } block  text-sm font-medium text-gray-900 dark:text-red-600`}
+                  >
+                    {error.reset.error}
+                  </label>
+                  <label
+                    for="sign in error"
+                    className={`${
+                      error.login.isTrue ? "" : "hidden"
+                    } block  text-sm font-medium text-gray-900 dark:text-red-600`}
+                  >
+                    {error.login.error}
+                  </label>
+
                   <button
                     type="submit"
                     className="w-full text-white bg-rose-600 hover:bg-rose-500 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
@@ -224,6 +283,7 @@ export default function Login({ signup, setSignup, setuser, user }) {
                       onClick={() => {
                         setSignup(true);
                         setResetpassword(false);
+                        setError((prev) => errorState);
                       }}
                       className="font-medium text-primary-600 hover:underline dark:text-primary-500"
                     >
@@ -355,7 +415,7 @@ export default function Login({ signup, setSignup, setuser, user }) {
                     <label
                       for="confirm password"
                       className={`${
-                        error ? "" : "hidden"
+                        error.passwordmatch.isTrue ? "" : "hidden"
                       } block mb-1 text-sm font-medium text-gray-900 dark:text-red-600`}
                     >
                       Password Do Not Match
@@ -378,6 +438,22 @@ export default function Login({ signup, setSignup, setuser, user }) {
                       required=""
                     />
                   </div>
+                  <label
+                    for="confirm password"
+                    className={`${
+                      error.signup.isTrue ? "" : "hidden"
+                    } block mb-1 text-sm font-medium text-gray-900 dark:text-red-600`}
+                  >
+                    {error.signup.error}
+                  </label>
+                  <label
+                    for="signup error"
+                    className={`${
+                      error.signup.isTrue ? "" : "hidden"
+                    } block mb-1 text-sm font-medium text-gray-900 dark:text-red-600`}
+                  >
+                    {error.signup.error}
+                  </label>
 
                   <button
                     type="submit"

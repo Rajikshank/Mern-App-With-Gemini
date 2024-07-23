@@ -23,6 +23,7 @@ export async function createAccount({ email, username, password, security }) {
     return response.data;
   } catch (err) {
     console.log(err);
+    throw err;
   }
 }
 
@@ -40,6 +41,7 @@ export async function login({ email, password }) {
     return response.data;
   } catch (error) {
     console.log(error);
+    throw error;
   }
 }
 
@@ -94,6 +96,7 @@ export async function resetCredential({ email, security, password }) {
     return { status: response.status, data: response.data };
   } catch (error) {
     console.log(error);
+    throw error;
   }
 }
 
