@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 
-const AddTodo = ({ addTodo }) => {
-  const [text, setText] = useState("");
-
+const AddTodo = ({ addTodo, text, setText, Todo_id }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (text.trim()) {

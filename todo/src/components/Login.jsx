@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { createAccount, login } from "../utils/Request";
 
-export default function Login({ signup, setSignup }) {
+export default function Login({ signup, setSignup, setuser, user }) {
   const [formData, setformData] = useState({
     email: "",
     password: "",
@@ -26,7 +26,8 @@ export default function Login({ signup, setSignup }) {
 
         createAccount(formData).then((userdata) => {
           console.log(userdata);
-
+          setuser(userdata.user);
+          setSignup(false);
           //navigating to dashboard after the promise resolved
           navigate(
             userdata === undefined
@@ -41,6 +42,7 @@ export default function Login({ signup, setSignup }) {
       login(formData)
         .then((userdata) => {
           console.log(userdata);
+          setuser(userdata.user);
 
           navigate(
             userdata === undefined

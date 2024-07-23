@@ -32,18 +32,31 @@ export async function login({ email, password }) {
   try {
     const response = await instance.post("/user-login", user);
     localStorage.setItem("token", response.data.token);
+
     instance.defaults.headers.common["x-auth-token"] = response.data.token;
 
+    console.log(response.data);
     return response.data;
   } catch (error) {
     console.log(error);
   }
 }
 
+export async function getuser() {
+  try {
+    loadtoken();
+    const user = await instance.get("/user");
+    return user.data;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 //edit user data function
-export async function edituser({ email, password, security }) {
+export async function edituser({ email, password, security, username }) {
   try {
     const response = await instance.put("/user-edit", {
+      username,
       email,
       password,
       security,
@@ -54,10 +67,17 @@ export async function edituser({ email, password, security }) {
 }
 
 //delete user function
-export async function deleteuser() {
+export async function deleteuser(navigate) {
+  var answer = window.confirm("Are You sure want to Delete Your Account?");
+  if (!answer) {
+    return;
+  }
+
   try {
+    loadtoken();
     const response = await instance.delete("/user");
     instance.defaults.headers.common["x-auth-token"] = "";
+    navigate("/");
     return response.status;
   } catch (error) {
     console.log(error);
@@ -67,6 +87,7 @@ export async function deleteuser() {
 //not using any fancy logic for logout just using the local storage to logout user
 export async function logout(navigate) {
   localStorage.removeItem("token");
+  localStorage.removeItem("user");
   navigate("/");
 }
 

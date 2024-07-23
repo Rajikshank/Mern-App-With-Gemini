@@ -200,4 +200,25 @@ router.delete("/user", Middleware, async (req, res) => {
   }
 });
 
+//get user account
+router.get("/user", Middleware, async (req, res) => {
+  const { id } = req.user;
+
+  console.log(id);
+  try {
+    var user = await TodoSchema.findById({ _id: id });
+
+    if (!user) {
+      //  console.log(user);
+      return res.status(400).send({ msg: "User not found" });
+    }
+
+    if (user) {
+      return res.status(200).json( user );
+    }
+  } catch (error) {
+    res.status(400).json({ msg: "Server error !!!" });
+  }
+});
+
 module.exports = router;

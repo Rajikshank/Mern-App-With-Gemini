@@ -1,25 +1,31 @@
 import { useEffect, useState } from "react";
 import AddTodo from "./AddTodo";
 import TodoList from "./TodoList";
-import {
-  deletetodo,
-  editTodo,
-  getTodos,
-  logout,
-  sendTodo,
-} from "../utils/Request";
+import { deletetodo, editTodo, getTodos, sendTodo } from "../utils/Request";
+import Header from "./Header";
+import AccountEditForm from "./AccountEditform";
 
-export default function Dashboard() {
+export default function Dashboard({ currentuser, setuser }) {
   const [todos, setTodos] = useState([
     { _id: 1, text: "Learn React", completed: false, subtask: [] },
     { _id: 2, text: "Learn Tailwind CSS", completed: false, subtask: [] },
   ]);
+  const [text, setText] = useState(""); // add todo text handler
+  const [Todo_id, setTodoid] = useState("");
+
+  console.log(currentuser);
+  const [toggleaccountedit, settoggleAccountedit] = useState(false);
 
   //ensure to load all the todos at the begining of the page render
   useEffect(() => {
     getTodos().then((value) => {
       setTodos((prev) => [...value]);
     });
+
+    return () => {
+      // clean up for useffect
+      setTodos((prev) => []);
+    };
   }, []);
 
   const addTodo = async (todo) => {
@@ -52,20 +58,32 @@ export default function Dashboard() {
 
   console.log(todos);
   return (
-    <div className="min-h-screen ">
-      <div className="p-4 bg-gray-800 w-screen shadow-md flex flex-col items-center">
-        <header className="  text-white p-4 text-center">
-          <h1 className="text-2xl font-bold">Todo Dashboard</h1>
-        </header>
-      </div>
-      <div className="container mx-auto p-4 w-1/2">
-        <AddTodo addTodo={addTodo} />
-        <TodoList
-          todos={todos}
-          toggleTodo={toggleTodo}
-          toggleDelete={toggleDelete}
-        />
-      </div>
+    <div className="flex flex-col items-center">
+      <Header
+        edit={settoggleAccountedit}
+        currentuser={currentuser}
+        toggleaccountedit={toggleaccountedit}
+      />
+      {!toggleaccountedit && (
+        <div className="  p-4 ">
+          <AddTodo
+            addTodo={addTodo}
+            text={text}
+            setText={setText}
+            Todo_id={Todo_id}
+          />
+          <TodoList
+            todos={todos}
+            toggleTodo={toggleTodo}
+            toggleDelete={toggleDelete}
+            setTodoid={setTodoid}
+            setText={setText}
+          />
+        </div>
+      )}
+      {toggleaccountedit && (
+        <AccountEditForm setEdit={settoggleAccountedit} setuser={setuser} />
+      )}
     </div>
   );
 }
