@@ -5,7 +5,7 @@ import {
   deletetodo,
   editTodo,
   getTodos,
-  getuser,
+
   sendTodo,
 } from "../utils/Request";
 import Header from "./Header";

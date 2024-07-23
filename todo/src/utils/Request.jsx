@@ -43,6 +43,7 @@ export async function login({ email, password }) {
   }
 }
 
+//function to get user data anywhere in the app
 export async function getuser() {
   try {
     loadtoken();
@@ -86,6 +87,16 @@ export async function deleteuser(navigate) {
   }
 }
 
+export async function resetCredential({ email, security, password }) {
+  try {
+    const response = await instance.put("/user", { email, security, password });
+
+    return { status: response.status, data: response.data };
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 //not using any fancy logic for logout just using the local storage to logout user
 export async function logout(navigate) {
   localStorage.removeItem("token");
@@ -120,6 +131,7 @@ export async function getTodos() {
   }
 }
 
+//edit todo text
 export async function editTodo(todo) {
   try {
     loadtoken();
@@ -131,6 +143,7 @@ export async function editTodo(todo) {
   }
 }
 
+//delete a todo by id
 export async function deletetodo(id) {
   console.log(id);
   try {

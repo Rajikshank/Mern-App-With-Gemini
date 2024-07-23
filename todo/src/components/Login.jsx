@@ -1,25 +1,33 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { createAccount, login } from "../utils/Request";
+import { createAccount, login, resetCredential } from "../utils/Request";
 
 export default function Login({ signup, setSignup, setuser, user }) {
-  const [formData, setformData] = useState({
+  const initial_fields = {
     email: "",
     password: "",
     username: "",
     confirmpassword: "",
     security: "",
-  });
+  };
+  const [formData, setformData] = useState(initial_fields);
 
   const [error, setError] = useState(false);
+  const [resetpassword, setResetpassword] = useState(false);
   const navigate = useNavigate();
+
+  const Resetpassword = async () => {
+    resetCredential(formData)
+      .then((value) => console.log("reset success"))
+      .catch((err) => console.log(err));
+  };
 
   //console.log(formData);
   const handlesubmit = async (e) => {
     e.preventDefault();
 
-    if (signup) {
+    if (signup && !resetpassword) {
       if (formData.password === formData.confirmpassword) {
         setError(false);
         console.log("password matched");
@@ -38,6 +46,11 @@ export default function Login({ signup, setSignup, setuser, user }) {
       } else {
         setError(true);
       }
+    } else if (resetpassword) {
+      // reset password handler
+      Resetpassword(formData);
+      setResetpassword(false);
+      setformData((prev) => initial_fields);
     } else {
       login(formData)
         .then((userdata) => {
@@ -99,6 +112,31 @@ export default function Login({ signup, setSignup, setuser, user }) {
                       required=""
                     />
                   </div>
+                  {resetpassword && (
+                    <div>
+                      <label
+                        for="security"
+                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                      >
+                        Please Enter your Security Key
+                      </label>
+                      <input
+                        type="text"
+                        name="security"
+                        id="security"
+                        value={formData.security}
+                        onChange={(e) =>
+                          setformData((prev) => ({
+                            ...prev,
+                            [e.target.id]: e.target.value,
+                          }))
+                        }
+                        className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        placeholder="eg: An01Kl"
+                        required
+                      />
+                    </div>
+                  )}
                   <div>
                     <label
                       for="password"
@@ -144,7 +182,10 @@ export default function Login({ signup, setSignup, setuser, user }) {
                     </div>
                     <a
                       href="#"
-                      className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500"
+                      onClick={() => setResetpassword(true)}
+                      className={`text-sm font-medium text-slate-400 hover:underline   ${
+                        resetpassword && "hidden"
+                      }`}
                     >
                       Forgot password?
                     </a>
@@ -154,7 +195,7 @@ export default function Login({ signup, setSignup, setuser, user }) {
                     className="w-full text-white bg-rose-600 hover:bg-rose-500 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
                     onClick={handlesubmit}
                   >
-                    Sign in
+                    {resetpassword ? "Reset Password" : "Sign in"}
                   </button>
                   <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                     Don’t have an account yet?{" "}
