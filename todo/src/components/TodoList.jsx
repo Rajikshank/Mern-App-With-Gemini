@@ -8,7 +8,8 @@ export default function TodoList({
   selectedTodo,
   setSeclectedTodo,
   setText,
-  setDate
+  setDate,
+  toggleSubtask
 }) {
   return (
     <div className="mt-4">
@@ -22,6 +23,7 @@ export default function TodoList({
           setSeclectedTodo={setSeclectedTodo}
           setText={setText}
           setDate={setDate}
+          toggleSubtask={toggleSubtask}
         />
       ))}
     </div>

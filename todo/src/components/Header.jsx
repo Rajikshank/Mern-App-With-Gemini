@@ -5,7 +5,12 @@ import { useNavigate } from "react-router-dom";
 import { FaUserEdit } from "react-icons/fa";
 import { MdSpaceDashboard } from "react-icons/md";
 
-export default function Header({ edit, currentuser, toggleaccountedit }) {
+export default function Header({
+  edit,
+  currentuser,
+  toggleaccountedit,
+  completed,
+}) {
   const navigate = useNavigate();
 
   return (
@@ -14,11 +19,13 @@ export default function Header({ edit, currentuser, toggleaccountedit }) {
         <h1 className="text-2xl font-bold">
           Hi
           {currentuser.username
-            ?" "+ currentuser.username.toUpperCase() + " "
+            ? " " + currentuser.username.toUpperCase() + " "
             : "There"}
           !!!
         </h1>
+        <h1 className="mt-1 text-slate-400">You have Completed {completed} Task{completed>1&&'s'}</h1>
       </header>
+     
       <div className="flex gap-5 items-center justify-center">
         <button
           className="flex items-center gap-1 text-slate-500 hover:text-slate-200  hover:animate-pulse"

@@ -27,7 +27,7 @@ const TodoSchema = new mongoose.Schema({
       date: { type: Date, default: Date.now },
       subtask: [
         {
-          task: { type: String, default: "This is a subtask" },
+          task: { type: String },
           completed: { type: Boolean },
         },
       ],

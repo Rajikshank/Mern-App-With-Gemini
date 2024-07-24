@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { editTodo } from "../utils/Request";
 import { DatePicker } from "antd";
+import run from "../utils/Gemini-api";
 
 const AddTodo = ({
   addTodo,
@@ -11,8 +12,10 @@ const AddTodo = ({
   setSeclectedTodo,
   date,
   setDate,
+  subtask,
+  setSubtask,
 }) => {
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (text.trim()) {
       if (selectedTodo) {
@@ -30,13 +33,36 @@ const AddTodo = ({
           .catch((err) => console.log("todo edit failed", err));
         setSeclectedTodo((prev) => null); //deselecting editing option
       } else {
-        addTodo({
-          _id: Date.now(),
-          text: text,
-          completed: false,
-          subtask: [],
-          date: date,
-        });
+        run(text)
+          .then((value) => {
+            let Sub_tasks = value.map((item) => ({
+              //mapping each subtask from gemini model to suitable mongo db model array
+              task: item.subtask,
+              completed: false,
+            }));
+
+            console.log(Sub_tasks);
+            setSubtask((prev) => Sub_tasks); //setting the subtask in the current state of the app
+
+            addTodo({
+              _id: Date.now(),
+              text: text,
+              completed: false,
+              subtask: [...Sub_tasks],
+              date: date,
+            });
+          })
+          .catch((err) => {
+            console.log("failed to generate subtasks...", err); // in the event of network failure the subtask array will be set as a empty array
+
+            addTodo({
+              _id: Date.now(),
+              text: text,
+              completed: false,
+              subtask: [],
+              date: date,
+            });
+          });
       }
       setText("");
     }
