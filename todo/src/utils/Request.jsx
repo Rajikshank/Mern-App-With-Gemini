@@ -72,7 +72,7 @@ export async function edituser({ email, password, security, username }) {
 
 //delete user function
 export async function deleteuser(navigate) {
-  var answer = window.confirm("Are You sure want to Delete Your Account?");
+  var answer = window.confirm("Are You Sure Do You Want to Delete Your Account?");
   if (!answer) {
     return;
   }

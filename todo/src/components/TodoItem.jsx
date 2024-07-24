@@ -49,7 +49,7 @@ export default function TodoItem({
       if (element.completed === true) completed_tasks++; // incrementing the values for main tasks
     });
 
-    return (completed_tasks / todo.subtask.length) * 100;
+    return Math.round((completed_tasks / todo.subtask.length) * 100);
   };
 
   return (

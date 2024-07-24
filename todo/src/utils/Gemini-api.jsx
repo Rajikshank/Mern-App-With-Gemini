@@ -1,6 +1,8 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { FunctionDeclarationSchemaType } from "@google/generative-ai";
 
+//function to access gemini pro model for getting suggested subtasks for our main taks as array
+
 // Access your API key as an environment variable.
 const genAI = new GoogleGenerativeAI(process.env.REACT_APP_API_URL);
 
@@ -26,6 +28,7 @@ async function run(task) {
     },
   });
 
+  //prompt for generating the subtasks
   const prompt = `generate me 3-5  sub tasks in a array  for this ${task},single sub task should not exceep 10 words`;
   //throw Error;
   try {
