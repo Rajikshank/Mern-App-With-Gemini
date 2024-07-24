@@ -61,10 +61,10 @@ export default function Dashboard({ currentuser, setuser }) {
     await sendTodo(todo)
       .then((value) => {
         setTodos([...value]);
-        setLoading((prev) => false);
+        setLoading((prev) => false); //setting loading false to release the skeloton from ui
         console.log("Todo added Response", value);
       })
-      .catch((err) => console.log("error in fetching todos", err));
+      .catch((err) => console.log("error in adding todos", err));
   };
 
   //function to toggle complete button on main tasks

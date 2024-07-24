@@ -19,21 +19,49 @@ const AddTodo = ({
     e.preventDefault();
     if (text.trim()) {
       if (selectedTodo) {
-        editTodo({
-          todo_id: selectedTodo._id.toString(),
-          text: text,
-          completed: selectedTodo.completed,
-          subtask: selectedTodo.subtask,
-          date: date,
-        })
-          .then((value) => {
-            console.log(value);
-            setTodos([...value]);
+        try {
+          let response = await run(text);
+          let Sub_tasks = response.map((item) => ({
+            //mapping each subtask from gemini model to suitable mongo db model array
+            task: item.subtask,
+            completed: false,
+          }));
+          setLoading((prev) => true);
+          editTodo({
+            todo_id: selectedTodo._id.toString(),
+            text: text,
+            completed: selectedTodo.completed,
+            subtask: [...Sub_tasks],
+            date: date,
           })
-          .catch((err) => console.log("todo edit failed", err));
+            .then((value) => {
+              console.log(value);
+              setTodos([...value]);
+              setLoading((prev) => false);
+            })
+            .catch((err) => console.log("todo edit failed", err));
+        } catch (error) {
+          console.log("error in generating subtaks", error);
+
+          //adding the edited todo if the network request to gemeini api is failed without subtask
+          editTodo({
+            todo_id: selectedTodo._id.toString(),
+            text: text,
+            completed: selectedTodo.completed,
+            subtask: [],
+            date: date,
+          })
+            .then((value) => {
+              console.log(value);
+              setTodos([...value]);
+              setLoading((prev) => false);
+            })
+            .catch((err) => console.log("todo edit failed", err));
+        }
+
         setSeclectedTodo((prev) => null); //deselecting editing option
       } else {
-        setLoading((prev) => true); //setting loding false to release the skelton on ui
+        setLoading((prev) => true); //setting loding true to release the skelton on ui
         run(text)
           .then((value) => {
             let Sub_tasks = value.map((item) => ({
@@ -51,7 +79,6 @@ const AddTodo = ({
               subtask: [...Sub_tasks],
               date: date,
             });
-            
           })
           .catch((err) => {
             console.log("failed to generate subtasks...", err); // in the event of network failure the subtask array will be set as a empty array
@@ -63,7 +90,6 @@ const AddTodo = ({
               subtask: [],
               date: date,
             });
-            
           });
       }
       setText("");
