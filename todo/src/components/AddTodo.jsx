@@ -17,80 +17,49 @@ const AddTodo = ({
 }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
+    let Sub_tasks = [];
+    setLoading((prev) => true); //setting loding true to show the skeleton on ui
     if (text.trim()) {
+      try {
+        let response = await run(text); //making request to gemini api to gain subtask
+        Sub_tasks = response.map((item) => ({
+          //mapping each subtask from gemini model to suitable mongo db model array
+          task: item.subtask,
+          completed: false,
+        }));
+      } catch (error) {
+        // error handler on api call fail
+
+        console.log("error in generating subtaks", error);
+      }
+
       if (selectedTodo) {
-        try {
-          let response = await run(text);
-          let Sub_tasks = response.map((item) => ({
-            //mapping each subtask from gemini model to suitable mongo db model array
-            task: item.subtask,
-            completed: false,
-          }));
-          setLoading((prev) => true);
-          editTodo({
-            todo_id: selectedTodo._id.toString(),
-            text: text,
-            completed: selectedTodo.completed,
-            subtask: [...Sub_tasks],
-            date: date,
+        setLoading((prev) => true);
+        editTodo({
+          todo_id: selectedTodo._id.toString(),
+          text: text,
+          completed: selectedTodo.completed,
+          subtask: Sub_tasks,
+          date: date,
+        })
+          .then((value) => {
+            console.log(value);
+            setTodos([...value]);
           })
-            .then((value) => {
-              console.log(value);
-              setTodos([...value]);
-              setLoading((prev) => false);
-            })
-            .catch((err) => console.log("todo edit failed", err));
-        } catch (error) {
-          console.log("error in generating subtaks", error);
+          .catch((err) => console.log("todo edit failed", err));
 
-          //adding the edited todo if the network request to gemeini api is failed without subtask
-          editTodo({
-            todo_id: selectedTodo._id.toString(),
-            text: text,
-            completed: selectedTodo.completed,
-            subtask: [],
-            date: date,
-          })
-            .then((value) => {
-              console.log(value);
-              setTodos([...value]);
-              setLoading((prev) => false);
-            })
-            .catch((err) => console.log("todo edit failed", err));
-        }
-
+        setLoading((prev) => false);
         setSeclectedTodo((prev) => null); //deselecting editing option
       } else {
-        setLoading((prev) => true); //setting loding true to release the skelton on ui
-        run(text)
-          .then((value) => {
-            let Sub_tasks = value.map((item) => ({
-              //mapping each subtask from gemini model to suitable mongo db model array
-              task: item.subtask,
-              completed: false,
-            }));
+        console.log(Sub_tasks);
 
-            console.log(Sub_tasks);
-
-            addTodo({
-              _id: Date.now(),
-              text: text,
-              completed: false,
-              subtask: [...Sub_tasks],
-              date: date,
-            });
-          })
-          .catch((err) => {
-            console.log("failed to generate subtasks...", err); // in the event of network failure the subtask array will be set as a empty array
-
-            addTodo({
-              _id: Date.now(),
-              text: text,
-              completed: false,
-              subtask: [],
-              date: date,
-            });
-          });
+        addTodo({
+          _id: Date.now(),
+          text: text,
+          completed: false,
+          subtask: [...Sub_tasks],
+          date: date,
+        });
       }
       setText("");
     }
