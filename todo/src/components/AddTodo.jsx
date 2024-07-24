@@ -12,8 +12,8 @@ const AddTodo = ({
   setSeclectedTodo,
   date,
   setDate,
-  subtask,
-  setSubtask,
+  loading,
+  setLoading,
 }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -33,6 +33,7 @@ const AddTodo = ({
           .catch((err) => console.log("todo edit failed", err));
         setSeclectedTodo((prev) => null); //deselecting editing option
       } else {
+        setLoading((prev) => true); //setting loding false to release the skelton on ui
         run(text)
           .then((value) => {
             let Sub_tasks = value.map((item) => ({
@@ -42,7 +43,6 @@ const AddTodo = ({
             }));
 
             console.log(Sub_tasks);
-            setSubtask((prev) => Sub_tasks); //setting the subtask in the current state of the app
 
             addTodo({
               _id: Date.now(),
@@ -51,6 +51,7 @@ const AddTodo = ({
               subtask: [...Sub_tasks],
               date: date,
             });
+            
           })
           .catch((err) => {
             console.log("failed to generate subtasks...", err); // in the event of network failure the subtask array will be set as a empty array
@@ -62,6 +63,7 @@ const AddTodo = ({
               subtask: [],
               date: date,
             });
+            
           });
       }
       setText("");
