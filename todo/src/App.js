@@ -4,6 +4,7 @@ import Login from "./components/Login";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Dashboard from "./components/Dashboard";
 import ProtectedRoute from "./utils/ProtectedRoute";
+import SomethinwenWrong from "./components/SomethinwenWrong";
 
 function App() {
   const [signup, setSignup] = useState(false);
@@ -11,6 +12,7 @@ function App() {
 
   const router = createBrowserRouter([
     {
+      errorElement: <SomethinwenWrong />,
       path: "/",
       element: (
         <Login
@@ -30,6 +32,7 @@ function App() {
           setuser={setCurrentuser}
         />
       ),
+      errorElement: <SomethinwenWrong />,
     },
   ]);
 

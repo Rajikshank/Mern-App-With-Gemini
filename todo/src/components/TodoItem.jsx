@@ -8,6 +8,7 @@ import { parseISO, format, formatDistanceToNow } from "date-fns";
 import SubTask from "./SubTask";
 import { FaCircleArrowDown } from "react-icons/fa6";
 import TodoSkeleton from "../utils/TodoSkeleton";
+import { BiError } from "react-icons/bi";
 
 export default function TodoItem({
   todo,
@@ -41,6 +42,7 @@ export default function TodoItem({
   //calculate completed subtask in every render of todo's
   useEffect(() => {
     setSubcompleted((prev) => calculateCompleted(todo));
+   setShowSubtask(prev=>false)
   }, [todo]);
 
   //function to calculate the percentage of completed subtasks
@@ -74,9 +76,11 @@ export default function TodoItem({
                     {" "}
                     Due : {todo.date && formatRemainingTime(todo.date)}{" "}
                   </h3>{" "}
-                  <h1 className="text-xs px-1 text-green-500">
-                    {subtaskcompleted ? subtaskcompleted : 0}% completed
-                  </h1>
+                  {Number.isInteger(subtaskcompleted) && (
+                    <h1 className="text-xs px-1 text-green-500">
+                      {subtaskcompleted}% completed
+                    </h1>
+                  )}
                   {todo.subtask.length > 0 && (
                     <button
                       className="flex text-xs items-center "
@@ -87,8 +91,9 @@ export default function TodoItem({
                     </button>
                   )}
                   {todo.subtask.length === 0 && (
-                    <h1 className="text-xs text-red-500 ">
+                    <h1 className="text-xs text-red-500 flex items-center px-1 ">
                       {" "}
+                      <BiError />
                       Failed to Generate Subtasks !!!
                     </h1>
                   )}
