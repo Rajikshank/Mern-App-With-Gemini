@@ -1,0 +1,316 @@
+{
+	"info": {
+		"_postman_id": "0dcd30ed-fd96-4759-9566-5eb001bff001",
+		"name": "Mern-Todo-App",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29707745",
+		"_collection_link": "https://lunar-meadow-379472.postman.co/workspace/Rajikshan-k~217843a7-2bf1-49cd-b50d-a6a8e348adf2/collection/29707745-0dcd30ed-fd96-4759-9566-5eb001bff001?action=share&source=collection_link&creator=29707745"
+	},
+	"item": [
+		{
+			"name": "Create-User",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\":\"g\",\r\n    \"email\":\"krajikshan@gmail.com\",\r\n    \"password\":\"1234\",\r\n\t\t\"security\":\"hello\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/user",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add-todo",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-auth-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjY5ZDExMTYwODQ0YzM3MWI5YmVjZTg2In0sImlhdCI6MTcyMTU2OTU1OCwiZXhwIjoxNzIxNjY5NTU4fQ.dKHsL89MB_pob9bKxTY4SUvQDwfYdsHxEGf-Tgo1x-Q",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"text\":\"Edited in postman2\",\r\n    \"completed\":false,\r\n    \"subtask\":[{\"task\":\"buy flour\",\"completed\":false}]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/todos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"todos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Edit-todo",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "x-auth-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjY5ZDExMTYwODQ0YzM3MWI5YmVjZTg2In0sImlhdCI6MTcyMTU2OTU1OCwiZXhwIjoxNzIxNjY5NTU4fQ.dKHsL89MB_pob9bKxTY4SUvQDwfYdsHxEGf-Tgo1x-Q",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\r\n{\r\n    \"todo_id\": \"669d1d3e4e1ea3aa8bf3d1d3\",\r\n    \"text\":\"Make a sandwich -edited-edited\",\r\n    \"completed\":false,\r\n    \"subtask\":[{\"task\":\"buy flour -edited\",\"completed\":false}]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/todos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"todos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete-Todo",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "x-auth-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjY5ZDExMTYwODQ0YzM3MWI5YmVjZTg2In0sImlhdCI6MTcyMTU2OTU1OCwiZXhwIjoxNzIxNjY5NTU4fQ.dKHsL89MB_pob9bKxTY4SUvQDwfYdsHxEGf-Tgo1x-Q",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\r\n{\r\n    \"todo_id\": \"669d17435b3ae0e37bf31af9\"\r\n    \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/todos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"todos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \r\n    \"email\":\"krajikshan637@gmail.com\",\r\n    \"password\":\"1234\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/user/login/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"user",
+						"login",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Reset Password",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\":\"qw\",\r\n    \"email\":\"krajiksha637@gmail.com\",\r\n    \"security\":\"hello\",\r\n    \"password\":\"1234\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/user",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Edit-user",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "x-auth-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjY5Zjc5YWY4YTE3YTk2NTFjODVmNTRlIn0sImlhdCI6MTcyMTk0MzgyNSwiZXhwIjoxNzIyMDQzODI1fQ.HBdruIb-goGEs7tUcKHXB_Z6MNYwB1ZaRqkUiWwIddc",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\":\"qw\",\r\n    \"email\":\"krajikshan637@gmail.com\",\r\n\t\t\"security\":\"hello\",\r\n    \"password\":\"1234\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/user/edit",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"user",
+						"edit"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delet-user",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "x-auth-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjY5ZDEwZDAwODQ0YzM3MWI5YmVjZTdlIn0sImlhdCI6MTcyMTU2OTUzNiwiZXhwIjoxNzIxNjY5NTM2fQ.Umm1hZVmsqrTpIKu6fJz8zqhTdwtszdFCc03ZpLr8M8",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:5000/user",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get-Todos",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-auth-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjY5Zjc5YWY4YTE3YTk2NTFjODVmNTRlIn0sImlhdCI6MTcyMTk0OTY0NCwiZXhwIjoxNzIyMDQ5NjQ0fQ.KjKwt8PAqiICOTHt9VR5DhXRoNvMG2_JEii0EICbgLU",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:5000/todos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"todos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get-user",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-auth-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjY5ZDExMTYwODQ0YzM3MWI5YmVjZTg2In0sImlhdCI6MTcyMTY3MDE1NSwiZXhwIjoxNzIxNzcwMTU1fQ.IXVT6or2EPGqG-atlJxkeVvfLggc5qiZ9wLaFPNytYM",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:5000/user",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"user"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
