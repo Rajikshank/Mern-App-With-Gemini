@@ -1,8 +1,16 @@
 # 🚀 MERN Todo App with Google Gemini ✨
 
-A Simple MERN Stack Todo Application with Google Gemini's Text Generation for Subtasks
+A Simple MERN Stack Todo Application with Google Gemini's Text Generation for Subtasks.I have built this project as a task given for the Full Stack Trainee position at [Qtechy](https://qtechy.com.au/).
+
 
 This guide will help you set up and run the MERN stack application, which includes a MongoDB database, Express.js server, React.js frontend, and Node.js runtime.
+
+## Demo
+
+
+https://github.com/user-attachments/assets/a8497407-c4d4-468c-b218-e693c7925ba3
+
+
 
 ## Prerequisites 📋
 

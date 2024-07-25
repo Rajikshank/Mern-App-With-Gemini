@@ -60,7 +60,7 @@ export default function TodoItem({
       {selectedTodo?._id === todo._id && loading ? (
         <TodoSkeleton />
       ) : (
-        <div className=" flex flex-col ">
+        <div className=" flex flex-col font-Dosis">
           <div className="px-5  flex  justify-between bg-slate-200 rounded shadow p-4 mb-2">
             <div
               className={`    flex       gap-1  ${

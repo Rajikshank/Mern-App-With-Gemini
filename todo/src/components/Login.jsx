@@ -16,7 +16,7 @@ export default function Login({
   handlesubmit,
 }) {
   return (
-    <div className="">
+    <div className="font-Poppins">
       <div className="flex flex-col  items-center justify-center px-6 py-8 mx-auto h-[calc(100vh-74px)]   ]    lg:py-0">
         <a
           href="#"
@@ -27,7 +27,7 @@ export default function Login({
         </a>
         <div className="w-full  bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-            <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+            <h1 className="text-xl font-Poppins font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
               {resetpassword
                 ? "Reset Your Password"
                 : "Sign in to your account"}
@@ -112,7 +112,7 @@ export default function Login({
                       setResetpassword((prev) => false);
                       setError((prev) => errorState);
                     }}
-                    className="text-sm font-medium text-slate-400 hover:underline "
+                    className="font-Poppins text-sm font-medium text-slate-400 hover:underline "
                   >
                     Want to Sign in?
                   </a>
@@ -133,7 +133,7 @@ export default function Login({
                   <div className="ml-3 text-sm">
                     <label
                       htmlFor="remember"
-                      className="text-gray-500 dark:text-gray-300"
+                      className="font-Poppins text-gray-500 dark:text-gray-300"
                     >
                       Remember me
                     </label>
@@ -145,7 +145,7 @@ export default function Login({
                     setResetpassword(true);
                     setError(errorState);
                   }}
-                  className={`text-sm font-medium text-slate-400 hover:underline   ${
+                  className={`font-Poppins text-sm font-medium text-slate-400 hover:underline   ${
                     resetpassword && "hidden"
                   }`}
                 >
@@ -156,7 +156,7 @@ export default function Login({
                 htmlFor="reset error"
                 className={`${
                   error.reset.isTrue ? "" : "hidden"
-                } block  text-sm font-medium text-gray-900 dark:text-red-600`}
+                } block font-Poppins text-sm font-medium text-gray-900 dark:text-red-600`}
               >
                 {error.reset.error}
               </label>
@@ -164,19 +164,19 @@ export default function Login({
                 htmlFor="sign in error"
                 className={`${
                   error.login.isTrue ? "" : "hidden"
-                } block  text-sm font-medium text-gray-900 dark:text-red-600`}
+                } block font-Poppins  text-sm font-medium text-gray-900 dark:text-red-600`}
               >
                 {error.login.error}
               </label>
 
               <button
                 type="submit"
-                className="w-full text-white bg-rose-600 hover:bg-rose-500 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                className="w-full text-black font-Poppins bg-cyan-500 hover:bg-cyan-300 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
                 onClick={handlesubmit}
               >
-                {resetpassword ? "Reset Password" : "Sign in"}
+                {resetpassword ? "Reset Password" : "Sign In"}
               </button>
-              <p className="text-sm font-light text-gray-500 dark:text-gray-400">
+              <p className="text-sm font-light font-Poppins text-gray-500 dark:text-gray-400">
                 Don’t have an account yet?{" "}
                 <a
                   href="#"
@@ -185,7 +185,7 @@ export default function Login({
                     setResetpassword(false);
                     setError((prev) => errorState);
                   }}
-                  className="font-medium text-primary-600 hover:underline dark:text-primary-500"
+                  className="font-medium font-Poppins text-primary-600 hover:underline dark:text-primary-500"
                 >
                   Sign up
                 </a>
