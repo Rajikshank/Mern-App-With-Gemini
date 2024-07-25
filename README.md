@@ -10,6 +10,8 @@ Before you begin, ensure you have the following installed on your machine:
 
 - [Node.js](https://nodejs.org/) (includes npm) 🌐
 - [MongoDB](https://www.mongodb.com/try/download/community) (if running locally) 🗄️
+- [GOOGLE GEMINI API KEY](https://ai.google.dev/aistudio) (I already provided one with the email) 🗝️
+- [MONGOOSE DB URI] (I  already arovided one with the email ) 🔗
 
 ## Features 🌟
 
