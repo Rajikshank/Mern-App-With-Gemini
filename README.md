@@ -11,17 +11,47 @@ Before you begin, ensure you have the following installed on your machine:
 - [Node.js](https://nodejs.org/) (includes npm) 🌐
 - [MongoDB](https://www.mongodb.com/try/download/community) (if running locally) 🗄️
 - [GOOGLE GEMINI API KEY](https://ai.google.dev/aistudio) (I already provided one with the email) 🗝️
-- [MONGOOSE DB URI] (I  already arovided one with the email ) 🔗
+- MONGOOSE DB URI (I  already arovided one with the email ) 🔗
+
+
+
+
 
 ## Features 🌟
 
-- 🔐 JWT Authentication
-- 🛡️ Password Hashing using bcrypt
-- ✔️ Validation using express-validator
-- 👤 User Registration, Login, and Password Reset
-- ✏️ Edit and Delete Account
-- ✅ Add Todos with automatic subtasks generation via Gemini Pro
-- 📈 Gamification: Track completed todos and subtasks with completion percentage
+### Frontend 💻
+
+- 🔑 **User Authentication**
+  - User Registration and Login
+  - Password Reset Functionality
+  
+- 📋 **Todo Management**
+  - Add, Edit, and Delete Todos
+  - Generate Subtasks using Google Gemini Pro ✨
+  
+- 🎮 **Gamification**
+  - Track Completed Todos and Subtasks
+  - Display Completion Percentages
+
+- 👤 **User Account Management**
+  - Edit and Delete Account
+
+### Backend 🔧
+
+- 🔐 **Security**
+  - JWT Authentication
+  - Password Hashing using bcrypt
+  
+- 🛡️ **Validation**
+  - Data Validation using express-validator
+  
+- 📊 **Database**
+  - MongoDB Integration for Storing User and Todo Data
+
+- 🔄 **API Integration**
+  - Google Gemini API for Subtask Generation
+
+
 
 ## Project Setup 🛠️
 
