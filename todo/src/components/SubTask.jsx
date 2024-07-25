@@ -13,7 +13,7 @@ export default function SubTask({ todo, toggleSubtask }) {
         <ul class="space-y-4 text-left text-gray-400 dark:text-white ">
           {todo.subtask.map((item) => (
             <li
-              className="flex items-center space-x-3 rtl:space-x-reverse"
+              className="flex items-center space-x-3 rtl:space-x-reverse bg-gray-400  rounded p-1 "
               key={item._id}
             >
               <button
@@ -56,7 +56,7 @@ export default function SubTask({ todo, toggleSubtask }) {
                 )}
               </button>
 
-              <span>{item.task}</span>
+              <span className="text-black">{item.task}</span>
             </li>
           ))}
         </ul>

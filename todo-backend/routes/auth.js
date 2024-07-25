@@ -2,152 +2,193 @@ const express = require("express");
 const TodoSchema = require("../utils/model");
 const bcrypt = require("bcryptjs");
 const Middleware = require("../utils/middleware");
+const { body, validationResult } = require("express-validator");
 
 const jwt = require("jsonwebtoken");
 
 const router = express.Router();
 
-//create account
-router.post("/user", async (req, res) => {
-  const { username, email, password, security } = req.body;
-  try {
-    console.log(username, email, password);
+// route for create account
+router.post(
+  "/user",
+  [
+    // username must be an email
+    body("email").notEmpty().isEmail(),
 
-    if (
-      username === undefined ||
-      email === undefined ||
-      password === undefined ||
-      security === undefined
-    ) {
-      return res.status(404).json({ msg: "User Details Not found" });
-    }
+    // password must be at least 4 chars long
+    body("password").isLength({ min: 4 }),
 
-    var user = await TodoSchema.findOne({ email: email });
-
-    if (user) {
-      return res.status(400).json({ msg: "User Already Exists" });
-    }
-
-    var salt = await bcrypt.genSalt(10);
-    const hashed_password = await bcrypt.hash(password, salt);
-
-    user = new TodoSchema({
-      username,
-      email,
-      password: hashed_password,
-      todos: [],
-      security,
-    });
-
-    await user.save();
-
-    const payload = {
-      user: {
-        id: user.id,
-      },
-    };
-
-    jwt.sign(
-      payload,
-      "TodoAppByRajikshan-K",
-      { expiresIn: 100000 },
-      (err, token) => {
-        if (err) throw err;
-
-        res.status(200).json({ token, user });
+    body("username").notEmpty(),
+  ],
+  async (req, res) => {
+    try {
+      const errors = validationResult(req); // validating the user input on server using express validator
+      if (!errors.isEmpty()) {
+        return res.status(400).json({ msg: "Invalid Registration Data" });
       }
-    );
 
-    // console.log(user);
-  } catch (error) {
-    return res.status(400).send({ msg: "server error !!!" });
-  }
-  //res.send("authenticated");
-});
+      const { username, email, password, security } = req.body;
 
-//login into account
-router.post("/user-login", async (req, res) => {
-  const { email, password } = req.body;
+      console.log(username, email, password);
 
-  // console.log(email, password);
-  try {
-    if (email === undefined) {
-      return res.status(400).send({ msg: "Credentials Not Found!!!" });
-    }
-
-    var user = await TodoSchema.findOne({ email: email });
-
-    if (!user) {
-      //  console.log(user);
-      return res.status(400).send({ msg: "User not found" });
-    }
-
-    const isMatch = await bcrypt.compare(password, user.password);
-
-    if (!isMatch) {
-      return res
-        .status(400)
-        .send({ msg: "Invalid Credentials Please check!!!" });
-    }
-
-    const payload = {
-      user: {
-        id: user.id,
-      },
-    };
-
-    jwt.sign(
-      payload,
-      "TodoAppByRajikshan-K",
-      { expiresIn: 100000 },
-      (err, token) => {
-        if (err) throw err;
-
-        res.status(200).json({ token, user });
+      if (
+        username === undefined ||
+        email === undefined ||
+        password === undefined ||
+        security === undefined
+      ) {
+        return res.status(404).json({ msg: "User Details Not found" });
       }
-    );
-  } catch (error) {
-    res.status(400).json({ msg: "Server error !!!" });
+
+      var user = await TodoSchema.findOne({ email: email });
+
+      if (user) {
+        return res.status(400).json({ msg: "User Already Exists" });
+      }
+
+      var salt = await bcrypt.genSalt(10);
+      const hashed_password = await bcrypt.hash(password, salt);
+
+      user = new TodoSchema({
+        username,
+        email,
+        password: hashed_password,
+        todos: [],
+        security,
+      });
+
+      await user.save();
+
+      const payload = {
+        user: {
+          id: user.id,
+        },
+      };
+
+      jwt.sign(
+        payload,
+        "TodoAppByRajikshan-K",
+        { expiresIn: 100000 },
+        (err, token) => {
+          if (err) throw err;
+
+          res.status(200).json({ token, user });
+        }
+      );
+
+      // console.log(user);
+    } catch (error) {
+      return res.status(400).send({ msg: "server error !!!" });
+    }
+    //res.send("authenticated");
   }
-});
+);
+
+//route for login into account
+router.post(
+  "/user/login",
+  [
+    // username must be an email
+    body("email").notEmpty().isEmail(),
+
+    // password must be at least 4 chars long
+    body("password").isLength({ min: 4 }),
+  ],
+  async (req, res) => {
+    try {
+      const errors = validationResult(req); // validating the user input on server using express validator
+      if (!errors.isEmpty()) {
+        return res.status(400).json({ msg: "invalid Credentials" });
+      }
+
+      const { email, password } = req.body;
+
+      // console.log(email, password);
+
+      var user = await TodoSchema.findOne({ email: email });
+
+      if (!user) {
+        //  console.log(user);
+        return res.status(400).send({ msg: "User not found" });
+      }
+
+      const isMatch = await bcrypt.compare(password, user.password);
+
+      if (!isMatch) {
+        return res
+          .status(400)
+          .send({ msg: "Invalid Password/Email Please check!!!" });
+      }
+
+      const payload = {
+        user: {
+          id: user.id,
+        },
+      };
+
+      jwt.sign(
+        payload,
+        "TodoAppByRajikshan-K",
+        { expiresIn: 100000 },
+        (err, token) => {
+          if (err) throw err;
+
+          res.status(200).json({ token, user });
+        }
+      );
+    } catch (error) {
+      res.status(400).json({ msg: "Server error !!!" });
+    }
+  }
+);
 
 //forgot password
-router.put("/user", async (req, res) => {
-  const { email, security, password } = req.body;
-  const salt = await bcrypt.genSalt(10);
+router.put(
+  "/user",
+  [
+    // username must be an email
+    body("email").notEmpty().isEmail(),
 
-  try {
-    if (email === undefined) {
-      return res.status(400).send({ msg: "Credentials Not Found!!!" });
-    }
+    // password must be at least 4 chars long
+    body("password").isLength({ min: 4 }),
+  ],
+  async (req, res) => {
+    try {
+      const errors = validationResult(req); // validating the user input on server using express validator
+      if (!errors.isEmpty()) {
+        return res.status(400).json({ msg: "Invalid Credentials" }); //sending a custom validation error msg
+      }
 
-    var user = await TodoSchema.findOne({ email: email });
+      const { email, security, password } = req.body;
+      const salt = await bcrypt.genSalt(10);
+      var user = await TodoSchema.findOne({ email: email });
 
-    if (!user) {
-      //  console.log(user);
-      return res.status(400).send({ msg: "User not found" });
-    }
+      if (!user) {
+        //  console.log(user);
+        return res.status(400).send({ msg: "User not found" });
+      }
 
-    if (user.security !== security) {
-      res.status(400).json({ msg: "security String Doesn't Match" });
+      if (user.security !== security) {
+        res.status(400).json({ msg: "security String Doesn't Match" });
+      }
+      if (user.security === security) {
+        user.email = email;
+        user.password = await bcrypt.hash(password, salt);
+        await user.save();
+        return res.status(200).json(user);
+      }
+    } catch (error) {
+      res.status(400).json({ msg: "Server error !!!" });
     }
-    if (user.security === security) {
-      user.email = email;
-      user.password = await bcrypt.hash(password, salt);
-      await user.save();
-      return res.status(200).json(user);
-    }
-  } catch (error) {
-    res.status(400).json({ msg: "Server error !!!" });
   }
-});
+);
 
-//edit user account
-router.put("/user-edit", Middleware, async (req, res) => {
-  const { username, email, password, security } = req.body;
-  const salt = await bcrypt.genSalt(10);
-
+//route for edit user account
+router.put("/user/edit", Middleware, async (req, res) => {
   try {
+    const { username, email, password, security } = req.body;
+    const salt = await bcrypt.genSalt(10);
+
     if (
       email === undefined ||
       username === undefined ||
@@ -179,10 +220,11 @@ router.put("/user-edit", Middleware, async (req, res) => {
 
 //delete user account
 router.delete("/user", Middleware, async (req, res) => {
-  const { id } = req.user;
-  const salt = await bcrypt.genSalt(10);
-  console.log(id);
   try {
+    const { id } = req.user;
+    const salt = await bcrypt.genSalt(10);
+    console.log(id);
+
     var user = await TodoSchema.findById({ _id: id });
 
     if (!user) {
@@ -202,10 +244,11 @@ router.delete("/user", Middleware, async (req, res) => {
 
 //get user account
 router.get("/user", Middleware, async (req, res) => {
-  const { id } = req.user;
-
-  console.log(id);
   try {
+    const { id } = req.user;
+
+    console.log(id);
+
     var user = await TodoSchema.findById({ _id: id });
 
     if (!user) {
@@ -214,7 +257,7 @@ router.get("/user", Middleware, async (req, res) => {
     }
 
     if (user) {
-      return res.status(200).json( user );
+      return res.status(200).json(user);
     }
   } catch (error) {
     res.status(400).json({ msg: "Server error !!!" });

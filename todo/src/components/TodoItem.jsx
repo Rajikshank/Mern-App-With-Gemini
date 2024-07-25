@@ -42,7 +42,6 @@ export default function TodoItem({
   //calculate completed subtask in every render of todo's
   useEffect(() => {
     setSubcompleted((prev) => calculateCompleted(todo));
-   setShowSubtask(prev=>false)
   }, [todo]);
 
   //function to calculate the percentage of completed subtasks
@@ -102,7 +101,7 @@ export default function TodoItem({
             </div>
 
             <div className="flex gap-5 pl-5 items-end ">
-              <button
+              <button //todo done button
                 onClick={() => toggleTodo(todo._id.toString())}
                 className={`px-2 py-1 rounded ${
                   todo.completed
@@ -112,11 +111,12 @@ export default function TodoItem({
               >
                 {todo.completed ? <FaUndoAlt /> : <FaCheck />}
               </button>
-              <button
+              <button // edit button
                 onClick={() => {
-                  setSeclectedTodo((prev) => todo);
+                  setSeclectedTodo((prev) => todo); //implementing state changes before the editing
                   setText((prev) => todo.text);
                   setDate((prev) => convertToDatetimeLocal(todo.date));
+                  setShowSubtask((prev) => false);
                 }}
                 className={`px-2 py-1  bg-slate-600 hover:bg-slate-500 rounded-full
         } text-white flex items-center gap-2 h-min ${
@@ -127,7 +127,7 @@ export default function TodoItem({
               >
                 <FaEdit />
               </button>
-              <button
+              <button //delete button
                 onClick={() => toggleDelete(todo._id.toString())}
                 className={`px-2 py-1  bg-slate-600 hover:bg-slate-500 rounded-full
         } text-white flex items-center gap-2 h-min`}

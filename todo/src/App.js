@@ -1,8 +1,8 @@
 import { useState } from "react";
-import Login from "./components/Login";
+import LandingPage from "./views/LandingPage";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Dashboard from "./components/Dashboard";
+import Dashboard from "./views/Dashboard";
 import ProtectedRoute from "./utils/ProtectedRoute";
 import SomethinwenWrong from "./components/SomethinwenWrong";
 
@@ -15,7 +15,7 @@ function App() {
       errorElement: <SomethinwenWrong />,
       path: "/",
       element: (
-        <Login
+        <LandingPage
           setSignup={setSignup}
           signup={signup}
           setuser={setCurrentuser}

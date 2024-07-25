@@ -99,7 +99,6 @@ router.put("/todos", Middleware, async (req, res) => {
 });
 
 //delete todo
-
 router.delete("/todos/:id", Middleware, async (req, res) => {
   const { id } = req.user;
   const todo_id = req.params.id;

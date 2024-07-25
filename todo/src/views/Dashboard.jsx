@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import AddTodo from "./AddTodo";
-import TodoList from "./TodoList";
+import AddTodo from "../components/AddTodo";
+import TodoList from "../components/TodoList";
 import { deletetodo, editTodo, getTodos, sendTodo } from "../utils/Request";
-import Header from "./Header";
-import AccountEditForm from "./AccountEditform";
+import Header from "../components/Header";
+import AccountEditForm from "../components/AccountEditform";
 import run from "../utils/Gemini-api";
 
 export default function Dashboard({ currentuser, setuser }) {

@@ -32,7 +32,7 @@ export async function login({ email, password }) {
   let user = { email, password };
 
   try {
-    const response = await instance.post("/user-login", user);
+    const response = await instance.post("/user/login/", user);
     localStorage.setItem("token", response.data.token);
     localStorage.setItem("user", JSON.stringify(response.data.user));
     instance.defaults.headers.common["x-auth-token"] = response.data.token;
@@ -59,7 +59,7 @@ export async function getuser() {
 //edit user data function
 export async function edituser({ email, password, security, username }) {
   try {
-    const response = await instance.put("/user-edit", {
+    const response = await instance.put("/user/edit", {
       username,
       email,
       password,
