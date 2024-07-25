@@ -56,7 +56,7 @@ export default function SubTask({ todo, toggleSubtask }) {
                 )}
               </button>
 
-              <span className="text-black">{item.task}</span>
+              <span className="text-black font-Poppins ">{item.task}</span>
             </li>
           ))}
         </ul>

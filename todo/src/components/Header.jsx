@@ -16,14 +16,14 @@ export default function Header({
   return (
     <div className="p-4 bg-gray-800 w-screen shadow-md flex flex-col items-center">
       <header className="  text-white p-4 text-center ">
-        <h1 className="text-2xl font-bold">
+        <h1 className="text-2xl font-bold ">
           Hi
           {currentuser.username
             ? " " + currentuser.username.toUpperCase() + " "
             : "There"}
           !!!
         </h1>
-        <h1 className="mt-1 text-slate-400">You have Completed {completed} Task{completed>1&&'s'}</h1>
+        <h1 className="mt-1 text-slate-400 font-Poppins ">You have Completed {completed} Task{completed>1&&'s'}</h1>
       </header>
      
       <div className="flex gap-5 items-center justify-center">
