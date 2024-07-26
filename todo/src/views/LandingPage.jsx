@@ -132,9 +132,9 @@ export default function LandingPage({ signup, setSignup, setuser, user }) {
             formData={formData}
             setformData={setformData}
             error={error}
-            setError={setError}
-            resetpassword={resetpassword}
-            setResetpassword={setResetpassword}
+            
+           
+          
             handlesubmit={handlesubmit}
           />
         )}

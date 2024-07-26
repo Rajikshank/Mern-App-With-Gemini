@@ -9,6 +9,7 @@ const jwt = require("jsonwebtoken");
 const router = express.Router();
 
 // route for create account
+//@api {post} /api/user Create a new user
 router.post(
   "/user",
   [
@@ -85,6 +86,7 @@ router.post(
 );
 
 //route for login into account
+//@api {post} /api/user/login login as a user
 router.post(
   "/user/login",
   [
@@ -143,6 +145,7 @@ router.post(
 );
 
 //forgot password
+//@api {put} /api/user Reset Password
 router.put(
   "/user",
   [
@@ -184,6 +187,7 @@ router.put(
 );
 
 //route for edit user account
+//@api {put} /api/user/edit Edit user details
 router.put("/user/edit", Middleware, async (req, res) => {
   try {
     const { username, email, password, security } = req.body;
@@ -219,6 +223,7 @@ router.put("/user/edit", Middleware, async (req, res) => {
 });
 
 //delete user account
+//@api {delete} /api/user delete existing user
 router.delete("/user", Middleware, async (req, res) => {
   try {
     const { id } = req.user;
@@ -243,6 +248,7 @@ router.delete("/user", Middleware, async (req, res) => {
 });
 
 //get user account
+//@api {get} /api/user get user data
 router.get("/user", Middleware, async (req, res) => {
   try {
     const { id } = req.user;

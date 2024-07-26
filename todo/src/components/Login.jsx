@@ -2,10 +2,10 @@ import React from "react";
 import Footer from "./Footer";
 
 export default function Login({
-  signup,
+
   setSignup,
-  setuser,
-  initial_fields,
+  
+ 
   errorState,
   formData,
   setformData,
