@@ -46,7 +46,7 @@ router.post(
       if (user) {
         return res.status(400).json({ msg: "User Already Exists" });
       }
-
+      //hasing the password using bcrypt
       var salt = await bcrypt.genSalt(10);
       const hashed_password = await bcrypt.hash(password, salt);
 
@@ -66,6 +66,7 @@ router.post(
         },
       };
 
+      //creating jwt token using a jwt secret
       jwt.sign(
         payload,
         "TodoAppByRajikshan-K",
