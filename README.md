@@ -8,13 +8,18 @@ This guide will help you set up and run the MERN stack application, which includ
 
 https://github.com/user-attachments/assets/a8497407-c4d4-468c-b218-e693c7925ba3
 
+## Postman Collection 🚩
+
+[Link_to_Postman_Collection_link](https://lunar-meadow-379472.postman.co/workspace/Rajikshan-k~217843a7-2bf1-49cd-b50d-a6a8e348adf2/collection/29707745-0dcd30ed-fd96-4759-9566-5eb001bff001?action=share&creator=29707745)
+[Link_to_Postman_collection_Json](https://github.com/Rajikshank/Mern-Todo-Task/blob/master/Mern-Todo-App.postman_collection.json)
+
 ## Prerequisites 📋
 
 Before you begin, ensure you have the following installed on your machine:
 
 - [Node.js](https://nodejs.org/) (includes npm) 🌐
 - [MongoDB](https://www.mongodb.com/try/download/community) (if running locally) 🗄️
-- [GOOGLE GEMINI API KEY](https://ai.google.dev/aistudio) (I already provided one with the submission email) 🗝️
+- [GOOGLE GEMINI API KEY](https://ai.google.dev/aistudio) (I already provided one with the submission email)(REACT_APP_API_URL) 🗝️
 - MONGOOSE DB URI (I already provided one with the submission email ) 🔗
 
 ## Features 🌟

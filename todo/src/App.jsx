@@ -4,15 +4,16 @@ import LandingPage from "./views/LandingPage";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Dashboard from "./views/Dashboard";
 import ProtectedRoute from "./utils/ProtectedRoute";
-import SomethinwenWrong from "./components/SomethinwenWrong";
+import SomethinwentWrong from "./components/SomethinwentWrong";
 
 function App() {
   const [signup, setSignup] = useState(false);
   const [currentUser, setCurrentuser] = useState({});
 
+  //creating routes for our app
   const router = createBrowserRouter([
     {
-      errorElement: <SomethinwenWrong />,
+      errorElement: <SomethinwentWrong />,
       path: "/",
       element: (
         <LandingPage
@@ -32,7 +33,7 @@ function App() {
           setuser={setCurrentuser}
         />
       ),
-      errorElement: <SomethinwenWrong />,
+      errorElement: <SomethinwentWrong />,
     },
   ]);
 
