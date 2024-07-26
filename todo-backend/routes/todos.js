@@ -4,6 +4,7 @@ const Middleware = require("../utils/middleware");
 const router = express.Router();
 
 //get all the  todo items
+//@api {get} /api/todos get all the todos with the user id
 router.get("/todos", Middleware, async (req, res) => {
   const { id } = req.user;
 
@@ -25,6 +26,7 @@ router.get("/todos", Middleware, async (req, res) => {
 });
 
 //add todo item
+//@api {post} /api/todos create a todo for a user id
 router.post("/todos", Middleware, async (req, res) => {
   const { text, completed, subtask, date } = req.body;
   const { id } = req.user;
@@ -60,6 +62,7 @@ router.post("/todos", Middleware, async (req, res) => {
 });
 
 //edit  todo items
+//@api {put} /api/todos edit the todo for a user id and todo id
 router.put("/todos", Middleware, async (req, res) => {
   const { todo_id, text, completed, subtask, date } = req.body;
   const { id } = req.user;
@@ -99,6 +102,7 @@ router.put("/todos", Middleware, async (req, res) => {
 });
 
 //delete todo
+//@api {delete} /api/todos delete the todo based on the todo id
 router.delete("/todos/:id", Middleware, async (req, res) => {
   const { id } = req.user;
   const todo_id = req.params.id;

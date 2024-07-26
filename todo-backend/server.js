@@ -23,12 +23,13 @@ app.use(cors());
 app.use(auth);
 app.use(todos);
 
-//defining fallback page
+//defining fallback page for backend
 app.get("*", (req, res) => {
   // console.log(res);
   res.send("<h1 style= 'text-align: center;'> 404 Page Not Found </h1>");
 });
 
+//the server will be running on port 5000
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => console.log(`Server Started on ${PORT}`));

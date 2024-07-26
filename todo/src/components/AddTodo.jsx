@@ -34,7 +34,7 @@ const AddTodo = ({
       }
 
       if (selectedTodo) {
-        setLoading((prev) => true);
+        setLoading((prev) => true); // setting the loading true to render the skeleton on screen
         editTodo({
           todo_id: selectedTodo._id.toString(),
           text: text,

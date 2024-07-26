@@ -16,7 +16,7 @@ export async function createAccount({ email, username, password, security }) {
   console.log(user);
   try {
     const response = await instance.post("/user", user);
-    console.log(response);
+   // console.log(response);
     localStorage.setItem("token", response.data.token);
     localStorage.setItem("user", JSON.stringify(response.data.user));
     instance.defaults.headers.common["x-auth-token"] = response.data.token;
@@ -37,7 +37,7 @@ export async function login({ email, password }) {
     localStorage.setItem("user", JSON.stringify(response.data.user));
     instance.defaults.headers.common["x-auth-token"] = response.data.token;
 
-    console.log(response.data);
+    //console.log(response.data);
     return response.data;
   } catch (error) {
     console.log(error);
@@ -115,7 +115,7 @@ export async function sendTodo({ text, completed, subtask, date }) {
       subtask,
       date,
     });
-    console.log(response.data);
+  //  console.log(response.data);
     return response.data;
   } catch (error) {
     console.log(error);
@@ -129,7 +129,7 @@ export async function getTodos() {
     loadtoken();
     const response = await instance.get("/todos");
 
-    console.log(response.data);
+//    console.log(response.data);
     return response.data;
   } catch (error) {
     console.log(error);

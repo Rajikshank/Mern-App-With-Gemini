@@ -37,7 +37,7 @@ export default function LandingPage({ signup, setSignup, setuser, user }) {
   const [resetpassword, setResetpassword] = useState(false);
   const navigate = useNavigate();
 
-  console.log("error data", error);
+ // console.log("error data", error);
   //console.log(errorState.passwordmatch.isTrue);
   //console.log(formData);
   const handlesubmit = async (e) => {
